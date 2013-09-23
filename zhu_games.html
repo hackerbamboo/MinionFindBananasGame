@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Minions Love Bananas</title>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>	
+		<script type="text/javascript">
+		  
+            var totalclick;
+            var win = false;
+            $(function(){
+				$("#score").hide();
+				//"play" button is to start the game
+		        $("#submit").on("click", function(){
+					$("#score").show();
+					$("tr:last-child").after("<tr><td>" + $("#name").val()+"</td>" + "<td></td></tr>");
+					
+					//generate the locations of those bananas
+                    startGame();
+					
+					//using mouse movement to show the bananas 
+					$("#logo").on("mouseenter", function(){
+						$(".bananas").each(function(){
+							$(this).fadeIn(500);
+						});
+					});	
+				
+					$("#logo").on("mouseleave", function(){
+						$(".bananas").each(function(){
+							$(this).attr({"src": "4.png"});
+					});
+			
+					
+					ClickBananas();
+						
+					ValidClick();
+					
+					});
+				
+				
+				}); 
+
+				
+				
+		   });
+		   
+		   function ValidClick(){
+		   
+				$("#complete").click(function(){
+					if( totalclick == 3 && win ==true){
+						$("td:last").html("win");
+					}
+					else{
+						$("td:last").html("lose");
+                    }
+                    });
+                totalclick = 0;
+                win = false;
+		   }
+		   
+		   function ClickBananas(){
+		   
+					
+				$("#bananas_1").on("click", function(){
+					$("td:last").html("Got the 1st Banana");
+					$(this).attr({"src": "1.png"});
+                    totalclick = 1;
+
+				});
+				$("#bananas_2").on("click", function(){
+					$("td:last").html("Got the 2nd Banana");
+					$(this).attr({"src": "2.png"});
+                    if( win = true && totalclick == 1)        
+                        totalclick = 2;
+                    else win = false;
+					
+				});
+				$("#bananas_3").on("click", function(){
+					$("td:last").html("Got the 3rd Banana");
+					$(this).attr({"src": "3.png"});
+                    if ( win = true && totalclick == 2 )
+						totalclick = 3;
+                    else win = false;
+
+				});
+					
+		   };
+		   
+		   
+		   function startGame(){
+				
+				$("#bananas_1").attr({"src": "1.png"}).hide();
+				$("#bananas_2").attr({"src": "2.png"}).hide();
+				$("#bananas_3").attr({"src": "3.png"}).hide();
+				
+				
+				var x1 = Math.floor(Math.random()*$("#littleField").width())-$(".bananas").width()/2;
+		        var y1 = Math.floor(Math.random()*$("#littleField").height())-$(".bananas").height()/2;
+				var x2 = Math.floor(Math.random()*$("#littleField").width())-$(".bananas").width()/2;
+		        var y2 = Math.floor(Math.random()*$("#littleField").height())-$(".bananas").height()/2;
+				var x3 = Math.floor(Math.random()*$("#littleField").width())-$(".bananas").width()/2;
+		        var y3 = Math.floor(Math.random()*$("#littleField").height())-$(".bananas").height()/2;
+				
+				$("#bananas_1").css({
+					"margin-left": x1,
+					"margin-top": y1
+				});
+				$("#bananas_2").css({
+					"margin-left": x2,
+					"margin-top": y2
+				});
+				$("#bananas_3").css({
+					"margin-left": x3,
+					"margin-top": y3
+				});
+				
+				
+		   }
+		   
+		   
+		</script>
+		
+		<style>
+		
+		body {
+			background-color: #87CEFA;
+		}
+		 h1 {
+			text-align: center;
+			padding: 20px;
+			font-family: cursive;
+		}
+		
+		#logo {
+			width: 300px;
+			height: 300px;
+			padding: 20px;
+		}
+		 
+		#levelOptions {
+			float:left;
+			
+		}
+		 
+		
+		#gameField{
+			border: 10px solid black;
+			width: 1200px;
+			height: 600px;
+			float: right;
+			display: inline-block;
+			
+			
+		}
+		#littleField{
+			width:1100px;
+			height:500px;
+			margin: 20px;
+		}
+		
+		.bananas{
+			width:70px;
+			height:70px;
+			position:absolute;
+			display:inline-block;
+		}
+		
+		
+			
+		</style>
+    </head>
+    
+    <body>
+	    
+		<h1>Minions Love Bananas</h1>
+		
+		
+		
+		<div id="levelOptions">
+			<img src="headImage.jpg" id="logo">
+			<form>
+			<b>Please input your name</b><input type="text" id="name" maxlength="100" /><br>
+			<input type="button" id="submit" value="play"/>
+			<input type="button" id="complete" value="complete">
+			<p class="counter" id="timerStarts"></p>
+			<table border="1" cellpadding="10" id="score">
+				<tr>
+					<th>Name</th>
+					<th>Score</th>
+				</tr>
+			</table>
+			
+			</form>
+		</div>
+		
+		<div id="gameField">
+		<div id="littleField">
+			<img id="bananas_1"  class="bananas">
+			<img id="bananas_2"  class="bananas">
+			<img id="bananas_3"  class="bananas">
+		</div>
+		</div>
+			
+		
+		
+		
+		
+    </body>
+</html>
